@@ -1,18 +1,20 @@
-"use client"
-import { cn,formatDate } from '@/lib/utils'
-import { EyeIcon } from 'lucide-react'
-import Image from "next/image"
-import Link from "next/link"
-import React from 'react'
-import { Button } from './ui/button'
-import { Skeleton } from '@sanity/ui'
- 
+"use client";
 
-const StartupCard = ({ post, index }) => {
-  const { _createdAt, views, author, title, category, _id, image,description } = post
-  const authorId = author?.authorId
-  const authorName = author?.name
-  const imageUrl = image?.asset?.url || "https://placehold.co/48x48";
+import { cn, formatDate } from "@/lib/utils";
+import { EyeIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { Button } from "./ui/button";
+import { Skeleton } from "@/components/ui/skeleton"; // ✅ your UI skeleton, not @sanity/ui
+
+const StartupCard = ({ post }) => {
+  const { _createdAt, views, author, title, category, _id, image, description } = post;
+
+  const authorId = author?.authorId;
+  const authorName = author?.name;
+  const imageUrl = image?.asset?.url || "https://placehold.co/600x400";
+  const authorImageUrl = author?.image || "https://placehold.co/48x48";
 
   return (
     <li className="startup-card group">
@@ -39,40 +41,42 @@ const StartupCard = ({ post, index }) => {
 
         {/* Author Image */}
         <Link href={`/user/${authorId}`}>
-          <Image src={imageUrl} alt={authorName || "Author"} width={48} height={48} className="rounded-full object-cover" />
-
+          <Image
+            src={authorImageUrl}
+            alt={authorName || "Author"}
+            width={48}
+            height={48}
+            className="rounded-full object-cover"
+          />
         </Link>
       </div>
+
+      {/* Post Image & Description */}
       <Link href={`/startup/${_id}`}>
-      <p className='startup-card_desc'>
-        {description}
-      </p>
-      <img src={image} alt="placeholder" className='startup-card_img' />
+        <p className="startup-card_desc">{description}</p>
+        <img src={imageUrl} alt={title} className="startup-card_img" />
       </Link>
 
-      <div className='flex-between gap-3 mt-5'>
-        <Link href={`/?query=${category.toLowerCase()}`}>
-         <p className='text-16-medium'>{category}</p>
+      <div className="flex-between gap-3 mt-5">
+        <Link href={`/?query=${category?.toLowerCase()}`}>
+          <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
-            <Link href={`/startup/${_id}`}>
-              Details
-            </Link>
+          <Link href={`/startup/${_id}`}>Details</Link>
         </Button>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default StartupCard
+export default StartupCard;
 
 export const StartupCardSkeleton = () => (
   <>
     {[0, 1, 2, 3, 4].map((index) => (
-      <li key={cn("skeleton", index)}>
+      <li key={index} className="skeleton">
         <Skeleton className="startup-card_skeleton" />
       </li>
     ))}
   </>
 );
-
