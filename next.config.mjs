@@ -4,17 +4,15 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    turbo: false, // disables turbopack
-    cacheComponents: true,
-    after: true,
+    turbo: false, // disable Turbopack for Sanity compatibility
+    after: true,  // safe experimental flag
   },
 
   webpack: (config) => {
-    // 🧩 Fix for missing html-context in Next.js 15
+    // Fix for Next.js 15 missing html-context
     config.resolve.alias[
       "next/dist/server/route-modules/app-page/vendored/contexts/html-context"
     ] = path.resolve("./patches/fix-html-context.js");
-
     return config;
   },
 
@@ -27,14 +25,8 @@ const nextConfig = {
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "plus.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "placehold.co",
-      },
+      { protocol: "https", hostname: "plus.unsplash.com" },
+      { protocol: "https", hostname: "placehold.co" },
     ],
     domains: ["avatars.githubusercontent.com"],
   },
