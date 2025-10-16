@@ -4,9 +4,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 experimental: {
-  turbo: {
-    rules: {}, // optional if you want to disable specific features
-  },
+  turbo: {},
   after: true,
 },
 
