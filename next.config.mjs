@@ -5,7 +5,6 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
 experimental: {
   turbo: {},
-  after: true,
 },
 
   webpack: (config) => {
