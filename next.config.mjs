@@ -3,10 +3,12 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbo: false, // disable Turbopack for Sanity compatibility
-    after: true,  // safe experimental flag
+experimental: {
+  turbo: {
+    rules: {}, // optional if you want to disable specific features
   },
+  after: true,
+},
 
   webpack: (config) => {
     // Fix for Next.js 15 missing html-context
