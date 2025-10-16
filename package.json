@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NEXT_SKIP_TURBOPACK=1 next build",
+    "build": "node --max_old_space_size=4096 ./node_modules/next/dist/bin/next build",
     "start": "next start"
-  },
+  }
+  ,
   "packageManager": "npm@10.5.2",
   "overrides": {
     "react": "$react",
