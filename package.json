@@ -14,7 +14,6 @@
     "next": "$next"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.13.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-toast": "^1.2.15",
     "@sanity/client": "^7.12.0",
@@ -52,7 +51,7 @@
     "toaster": "^0.1.2",
     "zod": "^4.1.12"
   },
-  "devDependencies" : {
-    "@netlify/plugin-nextjs" : "5.8.2"
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.14.0"
   }
 }
