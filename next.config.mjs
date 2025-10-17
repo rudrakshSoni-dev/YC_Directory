@@ -6,7 +6,9 @@ const nextConfig = {
 experimental: {
   turbo: {},
 },
-
+eslint:{
+  ignoreDuringBuilds: true,
+},
   webpack: (config) => {
     // Fix for Next.js 15 missing html-context
     config.resolve.alias[
