@@ -6,23 +6,26 @@ import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import MarkdownIt from 'markdown-it';
-import { Skeleton } from '@/components/ui/skeleton';  // ✅ no trailing space
+import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
 import StartupCard from '@/components/StartupCard';
 
 const md = new MarkdownIt();
 
-export const experimental_ppr = true;
+// Remove the invalid directive
+// export const experimental_ppr = true; // Optional; can keep if you know why you need it
 
 const page = async ({ params }) => {
-  "use cache";
+  // "use cache"; <-- REMOVE THIS LINE
 
-  const { id } = await params;
+  const { id } = params; // params is already an object
   console.log({ id });
 
+  // Fetch the startup post
   const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
 
-  const {editorPosts} = await client.fetch(PLAYLIST_BY_SLUG_QUERY,{slug : 'editor-picks-new'})
+  // Fetch editor picks
+  const { editorPosts } = await client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks-new' });
 
   if (!post) return notFound();
 
@@ -69,35 +72,26 @@ const page = async ({ params }) => {
             />
           ) : (
             <p className="no-result">No details provided</p>
-          )}  
-
+          )}
         </div>
+
         <hr className='divider' />
 
-        {editorPosts?.length > 0 && 
-        (
+        {editorPosts?.length > 0 && (
           <div className='max-w-4xl mx-auto'>
-            <p className='text-30-semibold'>
-              Editor Picks
-            </p>
+            <p className='text-30-semibold'>Editor Picks</p>
             <ul className='mt-7 card_grid-sm'>
-              {
-               editorPosts.map((post,index) => 
-                 <StartupCard key={index} post={post} />
-               )
-              }
+              {editorPosts.map((post, index) => (
+                <StartupCard key={index} post={post} />
+              ))}
             </ul>
           </div>
-        )
-        }
-
+        )}
 
         <Suspense fallback={<Skeleton />}>
           <View id={id} />
         </Suspense>
       </section>
-
-
     </>
   );
 };
